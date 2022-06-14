@@ -1,0 +1,74 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{{ path('app_produits_index') }}">
+            <img src="{{ asset('img/logo.jpg') }}">
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="{{ path('app_produits_index') }}">
+                ACCUEIL
+            </a>
+
+            <a class="navbar-item">
+                CATEGORIES
+            </a>
+
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    PLUS
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item">
+                        About
+                    </a>
+                    <a class="navbar-item">
+                        Jobs
+                    </a>
+                    <a class="navbar-item">
+                        Contact
+                    </a>
+                    <hr class="navbar-divider">
+                    <a class="navbar-item">
+                        Report an issue
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="button is-success" href="{{ path('admin') }}">
+                            ADMINISTRATION
+                        </a>
+
+                        <a href="{{ path('app_logout') }}" class="button is-danger">
+                            DECONNEXION
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="button is-light">
+                            CONNEXION
+                        </a>
+
+                        <a href="{{ path('app_register') }}" class="button is-primary">
+                            <strong>S'INSCRIRE</strong>
+                        </a>
+                    {% endif %}
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

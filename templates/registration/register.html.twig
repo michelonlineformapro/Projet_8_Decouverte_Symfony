@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="container box mt-3">
+        <h1 class="title is-3 has-text-warning">INSCRIPTION</h1>
+
+        {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.accepter) }}
+
+        <button type="submit" class="button is-success">S'INSCRIRE</button>
+        {{ form_end(registrationForm) }}
+    </div>
+
+{% endblock %}

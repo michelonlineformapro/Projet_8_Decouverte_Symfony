@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Le Mauvais Coin!{% endblock %}</title>
+        <link rel="icon"
+              href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22
+              viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run Appel du cdn css du framework Bulma css #}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+            <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="https://code.jquery.com/jquery-3.6.0.js"
+                    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+                    crossorigin="anonymous"></script>
+        {% endblock %}
+    </head>
+    <body>
+        {% block menu  %}
+            {% include "includes/menu.html.twig" %}
+        {% endblock %}
+        <!--LES FLASHBAGS = Notifications-->
+        {% for message in app.flashes('success') %}
+            <div class="notification is-success">
+                <button class="delete"></button>
+                {{ message }}
+            </div>
+        {% endfor %}
+
+
+        {% for message in app.flashes('danger') %}
+            <div class="notification is-danger">
+                <button class="delete"></button>
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+                    const $notification = $delete.parentNode;
+
+                    $delete.addEventListener('click', () => {
+                        $notification.parentNode.removeChild($notification);
+                    });
+                });
+            });
+        </script>
+
+
+        {% block body %}
+            <!--ICI LE CONTENU DE CHAQUE VUE ENFANT DE CE FICHIER -->
+        {% endblock %}
+    </body>
+</html>

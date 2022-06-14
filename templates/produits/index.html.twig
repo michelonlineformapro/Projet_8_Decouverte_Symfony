@@ -1,0 +1,123 @@
+{# Herite du template parent #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Mauvais Coin{% endblock %}
+
+{% block body %}
+    <div class="container box">
+        <div class="notification is-success is-light columns">
+            <div class="column is-6">
+                <h3 class="title is-3 has-text-info">SOLDE DU MOIS</h3>
+                <h4 class="title is-4 has-text-warning">
+                    20% de reduction sur le produit : {{ dernierProduit.nomProduit }}
+                </h4>
+                <p>{{ dernierProduit.descriptionProduit }}</p>
+            </div>
+            <div class="column is-6">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="/img{{ asset(dernierProduit.imageProduit)  }}" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-48x48">
+                                    <img src="/img{{ asset(dernierProduit.imageProduit)  }}" alt="Placeholder image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">{{ dernierProduit.nomProduit }}</p>
+                                <p class="subtitle is-6">PRIX : {{ dernierProduit.prixProduit }} € </p>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <div class="card-action">
+                                <!--Ici chemin + route + id de chaque produit-->
+                                <a href="{{ path('app_produits_show', {'id': dernierProduit.id}) }}" class="button is-info">Détails du produit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container box">
+
+
+        <!--LA PAGINATION-->
+        <div class="count has-text-info title is-3">
+            Nombre total de produits : {{ pagination.getTotalItemCount }}
+        </div>
+
+        <div class="navigation" style="margin-top: 20px">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+        {% if is_granted('ROLE_ADMIN') %}
+        <div class="mt-3">
+            <a href="{{ path('app_produits_new') }}" class="button is-light mt-3">Ajouter un produit</a>
+        </div>
+        {% endif %}
+
+
+        <div class="columns is-multiline" style="margin-top: 20px">
+            {% for produit in pagination %}
+                <div class="column is-4">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="/img{{ asset(produit.imageProduit)  }}" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-48x48">
+                                        <img src="/img{{ asset(produit.imageProduit)  }}" alt="Placeholder image">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-4">{{ produit.nomProduit }}</p>
+                                    <p class="subtitle is-6">PRIX : {{ produit.prixProduit }} € </p>
+
+                                    {% if produit.numero is not null %}
+                                    <!--alias + champ Produits (cle trangère) + champ Table Reference (getter)-->
+                                        <p class="has-text-info">Reference du produit (cle etrangère numero) : {{ produit.numero.numeroReference }}</p>
+                                    {% endif %}
+
+                                    <!--alias + champ Produits (cle trangère) + champ Table Categories (getter)-->
+                                   <p class="has-text-warning">Categorie : (cle etrangère ManyToOne & OneToMany) : {{ produit.categories.nomCategorie }}</p>
+
+                                    <!--Plusieur distributeur donc boucle for + champs table Distributeurs = alias + getter-->
+                                    {% for distributeur in produit.distributeurs %}
+                                        <p class="has-text-danger">Distributeur(s) :{{ distributeur.nomDistributeur }}</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="content">
+                                <div class="card-action">
+                                    <!--Ici chemin + route + id de chaque produit-->
+                                    <a href="{{ path('app_produits_show', {'id': produit.id}) }}" class="button is-info">Détails du produit</a>
+
+                                    <!--Supprimer annonces-->
+                                    <div style="margin-top: 20px">
+                                        {{ include('produits/_delete_form.html.twig') }}
+                                    </div>
+
+                                    <a href="{{ path('app_produits_edit', {'id': produit.id}) }}" class="button is-warning mt-4">Editer le produit</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
