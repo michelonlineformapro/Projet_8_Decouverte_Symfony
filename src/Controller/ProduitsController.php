@@ -6,6 +6,7 @@ use App\Entity\Produits;
 use App\Form\ProduitsType;
 use App\Repository\ProduitsRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,6 +51,7 @@ class ProduitsController extends AbstractController
 
     /**
      * @Route("/new", name="app_produits_new", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_ADMIN')") //cache le bouton ajouter si on est pas Admin
      * @param Request $request
      * @param ProduitsRepository $produitsRepository
      * @return Response
@@ -90,10 +92,10 @@ class ProduitsController extends AbstractController
                 );
                 //Attribution de la photo a l'entité a l'aide des setters
                 $produit->setImageProduit($fileName);
-                //Notification flash bag
+                //Notification flash bag en cas de succès
                 $this->addFlash('success', 'Votre annonce à bien été ajouté !');
             }else{
-                //Sinon notif d'erreur
+                //Sinon Notification flash bag en cas d'erreur
                 $this->addFlash('danger', 'Une erreur est survenur durant la création de votre annonce !');
                 //redirection vers la page ajouter produits
                 return $this->redirect($this->generateUrl('app_produits_new'));

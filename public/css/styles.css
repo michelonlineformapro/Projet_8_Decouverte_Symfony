@@ -1,7 +1,45 @@
+/*COLORS*/
+.is-primary {
+  background-color: #396273 !important;
+}
+
+.is-danger {
+  background-color: #8C3E4C !important;
+}
+
+.is-success {
+  background-color: #77A6A1 !important;
+}
+
+.is-warning {
+  background-color: #D9D0C7 !important;
+}
+
+/*Les textes*/
+.has-text-info {
+  color: #396273 !important;
+}
+
+.has-text-danger {
+  color: #8C3E4C !important;
+}
+
+.has-text-success {
+  color: #77A6A1 !important;
+}
+
+.has-text-warning {
+  color: #D9D0C7 !important;
+}
+
 html, body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+.button {
+  border-radius: 0 !important;
 }
 
 .card {

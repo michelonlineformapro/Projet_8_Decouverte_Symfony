@@ -1,7 +1,51 @@
+/*COLORS*/
+$rouge: #8C3E4C;
+$bleu: #396273;
+$vert: #77A6A1;
+$creme: #D9D0C7;
+$fonce: #BFB2AA;
+
+
+.is-primary{
+  background-color: $bleu!important;
+}
+.is-danger {
+  background-color: $rouge!important;
+}
+.is-success{
+  background-color: $vert!important;
+}
+.is-warning{
+  background-color: $creme!important;
+}
+
+/*Les textes*/
+.has-text-info{
+  color: $bleu!important;
+}
+.has-text-danger{
+  color: $rouge!important;
+}
+.has-text-success{
+  color: $vert!important;
+}
+.has-text-warning{
+  color: $creme!important;
+}
+
+
+
+
+
+
 html,body{
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+.button{
+  border-radius: 0!important;
 }
 
 .card{

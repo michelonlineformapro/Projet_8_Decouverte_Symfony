@@ -5,7 +5,7 @@
 
 {% block body %}
     <div class="container box">
-        <div class="notification is-success is-light columns">
+        <div class="notification is-light columns">
             <div class="column is-6">
                 <h3 class="title is-3 has-text-info">SOLDE DU MOIS</h3>
                 <h4 class="title is-4 has-text-warning">
@@ -70,7 +70,7 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img src="/img{{ asset(produit.imageProduit)  }}" alt="Placeholder image">
+                                <img class="is-rounded p-3" src="/img{{ asset(produit.imageProduit)  }}" alt="Placeholder image">
                             </figure>
                         </div>
                         <div class="card-content">
@@ -96,8 +96,14 @@
                                     {% for distributeur in produit.distributeurs %}
                                         <p class="has-text-danger">Distributeur(s) :{{ distributeur.nomDistributeur }}</p>
                                     {% endfor %}
+                                    <div class="content-footer mt-3 text-center">
+                                        <a href="{{ path('app_produits_show', {'id': produit.id}) }}" class="button is-primary">Plus d'info</a>
+                                    </div>
+
                                 </div>
                             </div>
+
+                            {% if is_granted('ROLE_ADMIN') %}
 
                             <div class="content">
                                 <div class="card-action">
@@ -113,6 +119,8 @@
 
                                 </div>
                             </div>
+
+                            {% endif %}
                         </div>
                     </div>
                 </div>
