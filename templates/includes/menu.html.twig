@@ -17,38 +17,17 @@
                 ACCUEIL
             </a>
 
-            <a class="navbar-item">
-                CATEGORIES
+            <a class="navbar-item" href="{{ path('app_rechercher') }}">
+                RECHERCHER
             </a>
 
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
-                    PLUS
-                </a>
-
-                <div class="navbar-dropdown">
-                    <a class="navbar-item">
-                        About
-                    </a>
-                    <a class="navbar-item">
-                        Jobs
-                    </a>
-                    <a class="navbar-item">
-                        Contact
-                    </a>
-                    <hr class="navbar-divider">
-                    <a class="navbar-item">
-                        Report an issue
-                    </a>
-                </div>
-            </div>
         </div>
 
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
 
-                    {% if is_granted('ROLE_ADMIN') %}
+                    {% if  is_granted('ROLE_ADMIN')  or is_granted('ROLE_USER')%}
                         <a class="button is-success" href="{{ path('admin') }}">
                             ADMINISTRATION
                         </a>

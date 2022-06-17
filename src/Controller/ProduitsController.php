@@ -51,7 +51,6 @@ class ProduitsController extends AbstractController
 
     /**
      * @Route("/new", name="app_produits_new", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_ADMIN')") //cache le bouton ajouter si on est pas Admin
      * @param Request $request
      * @param ProduitsRepository $produitsRepository
      * @return Response

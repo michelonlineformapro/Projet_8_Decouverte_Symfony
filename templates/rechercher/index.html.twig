@@ -1,20 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RechercherController!{% endblock %}
+{% block title %}SF5 -RECHERCHE-{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/Projet_8_Decouverte_Symfony/src/Controller/RechercherController.php'|file_link(0) }}">src/Controller/RechercherController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/Projet_8_Decouverte_Symfony/templates/rechercher/index.html.twig'|file_link(0) }}">templates/rechercher/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <h1 class="text-info text-center">Rechercher</h1>
+        {{ form(formulaireRecherche) }}
+
+
+        <div class="columns is-multiline">
+            {# Boucle de parcours des annonces = ici lister_annonces est la cle spécifiée dans le controlleur #}
+            {# 'lister_annonces' => $annoncesRepository->findAll() #}
+
+            {% for produit in resultatsRecherche %}
+                <div class="container shadow column is-4 mt-3">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img class="is-rounded p-3" src="/img{{ asset(produit.imageProduit) }}"
+                                     alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-48x48">
+                                        <img src="/img{{ asset(produit.imageProduit) }}" alt="Placeholder image">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-3has-text-info">Nom du vendeur
+                                        : {{ produit.utilisateurs.email }}</p>
+                                    <p class="title is-4">{{ produit.nomProduit }}</p>
+                                    <p class="subtitle is-6">PRIX : {{ produit.prixProduit }} € </p>
+
+                                    {% if produit.numero is not null %}
+                                        <!--alias + champ Produits (cle trangère) + champ Table Reference (getter)-->
+                                        <p class="has-text-info">Reference du produit (cle etrangère numero)
+                                            : {{ produit.numero.numeroReference }}</p>
+                                    {% endif %}
+
+                                    <!--alias + champ Produits (cle trangère) + champ Table Categories (getter)-->
+                                    <p class="has-text-warning">Categorie : (cle etrangère ManyToOne & OneToMany)
+                                        : {{ produit.categories.nomCategorie }}</p>
+
+                                    <!--Plusieur distributeur donc boucle for + champs table Distributeurs = alias + getter-->
+                                    {% for distributeur in produit.distributeurs %}
+                                        <p class="has-text-danger">Distributeur(s)
+                                            :{{ distributeur.nomDistributeur }}</p>
+                                    {% endfor %}
+                                    <div class="content-footer mt-3 text-center">
+                                        <a href="{{ path('app_produits_show', {'id': produit.id}) }}"
+                                           class="button is-primary">Plus d'info</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

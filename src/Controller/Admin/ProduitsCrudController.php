@@ -4,10 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Produits;
 use App\Form\ReferencesType;
+use App\Form\RegistrationFormType;
+use Cassandra\Type\UserType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
@@ -42,8 +45,7 @@ class ProduitsCrudController extends AbstractCrudController
             AssociationField::new('categories', 'Catégorie du produit'),
             AssociationField::new('distributeurs', 'Liste des distributeurs'),
             IntegerField::new('numero')
-            ->setFormType(ReferencesType::class)
-
+            ->setFormType(ReferencesType::class),
         ];
     }
 

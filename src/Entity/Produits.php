@@ -71,6 +71,12 @@ class Produits
      */
     private $categories;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="produits")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $utilisateurs;
+
 
 
     public function __construct()
@@ -205,5 +211,16 @@ class Produits
         return $this;
     }
 
+    public function getUtilisateurs(): ?User
+    {
+        return $this->utilisateurs;
+    }
+
+    public function setUtilisateurs(?User $utilisateurs): self
+    {
+        $this->utilisateurs = $utilisateurs;
+
+        return $this;
+    }
 
 }

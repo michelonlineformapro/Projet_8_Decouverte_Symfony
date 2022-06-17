@@ -7,6 +7,8 @@ use App\Entity\Distributeurs;
 use App\Entity\Produits;
 
 
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -56,6 +58,14 @@ class ProduitsType extends AbstractType
                 'choice_label' => 'nomCategorie',
                 'label' => 'Catégorie de l\'annonce',
                 'required' => true
+            ])
+            ->add('utilisateurs', EntityType::class,[
+                'class' => User::class,
+                'query_builder' => function (UserRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.id', 'ASC');
+                },
+                'choice_label' => 'email',
             ])
 
         ;
