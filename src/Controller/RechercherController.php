@@ -24,10 +24,8 @@ class RechercherController extends AbstractController
         $prixMin = "";
         $prixMax = "";
 
-        $mot = "";
-
         $message = [
-            "message" => "Test de debug"
+            "message" => "Vos resultats : "
         ];
         //On creer un formulaire customiser directement dans le controller a la place de la vue
         //On utilise la methode createFormbuilder
@@ -40,17 +38,9 @@ class RechercherController extends AbstractController
             //le champs prix max
             ->add("prixMax", NumberType::class,[
                 "label" => "Prix maximum du produit",
-                "required" => true
+                "required" => false
             ])
-                //Ce champ est de type searchType extenssion (lors de la creation d'un formulaire en ligne de commande php bin/console make:form
-                //Ne pas appeler le formulaire SearchType sous peine de conflit (ici RechercherType)
-            ->add("mot", SearchType::class,[
-                "label" => "Entrer votre recherche",
-                    "attr" => [
-                        "placeholer" => "Chaise en bois"
-                    ],
-                    "required" => false
-                ])
+
             //le bouton de recherche
             ->add("rechecrher", SubmitType::class,[
                 "label" => "Rechercher",
@@ -68,14 +58,13 @@ class RechercherController extends AbstractController
             //dd($resultat);
             $prixMin = $resultat['prixMin'];
             $prixMax = $resultat['prixMax'];
-            $mot = $resultat['mot'];
         }
         return $this->render('rechercher/index.html.twig', [
             'controller_name' => 'RechercherController',
             'formulaireRecherche' => $formulaireRecherche->createView(),
             //Appel de produit repository + custom queryBuilder
             //Cette methode prend 3 paralètres definis ci dessus =
-            'resultatsRecherche' => $produitsRepository->getMinMaxPrice($prixMin, $prixMax, $mot)
+            'resultatsRecherche' => $produitsRepository->getMinMaxPrice($prixMin, $prixMax)
         ]);
     }
 }

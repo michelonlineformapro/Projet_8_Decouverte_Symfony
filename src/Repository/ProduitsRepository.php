@@ -63,44 +63,22 @@ class ProduitsRepository extends ServiceEntityRepository
 
     //Trier les annonces par prix et mot cle
     //Cette methode est appelée dans RechercherController
-    public function getMinMaxPrice($prixMin, $prixMax, $mot){
-        //creation du queryBuilder + un alias de l'entité Annonces
+    public function getMinMaxPrice($prixMin, $prixMax){
+        //Creation du queryBuilder + alias de entité Annonces
         $query = $this->createQueryBuilder('produits');
 
-        //les 2 champs en paramètres et dans RechecrherContoleur
+        //Si les 2 champs sont remplis
         if($prixMin && $prixMax){
-            //le predicat et OU le prix du produits est entre 2 clés
             $query
                 ->andWhere('produits.prix_produit BETWEEN :prixmin AND :prixmax')
-                //les 2 cles => valeur paramètre de la fonction a spécifié dans le controleur
                 ->setParameter('prixmin', $prixMin)
                 ->setParameter('prixmax', $prixMax);
         }
 
-        //Recherche par mot cle en +
-        if($mot){
-            $query
-                ->where(
-                    $query->expr()->andX(
-                        $query->expr()->orX(
-                            $query->expr()->like('produits.nom_produit', ':recherche'),
-                            $query->expr()->like('produits.description_produit', ':recherche'),
-                            $query->expr()->like('produits.prix_produit', ':recherche'),
-                            $query->expr()->like('produits.distributeurs', ':recherche'),
-                            $query->expr()->like('produits.categories', ':recherche'),
-                            $query->expr()->like('produits.utilisateurs', ':recherche'),
-                        ),
-                        $query->expr()->isNotNull('produit.date_depot_produit')
-                    )
-                )
-                ->setParameter('recherche', '%' .$query. '%');
-            return $query->getQuery()->getResult();
-        }
-
-
-        //Resultat des recherches
         return $query->getQuery()->getResult();
     }
+
+
 
 //    /**
 //     * @return Produits[] Returns an array of Produits objects

@@ -4,12 +4,8 @@
 
 {% block body %}
     <div class="container">
-
-
         <h1 class="text-info text-center">Rechercher</h1>
         {{ form(formulaireRecherche) }}
-
-
         <div class="columns is-multiline">
             {# Boucle de parcours des annonces = ici lister_annonces est la cle spécifiée dans le controlleur #}
             {# 'lister_annonces' => $annoncesRepository->findAll() #}

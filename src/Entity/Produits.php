@@ -6,11 +6,12 @@ use App\Repository\ProduitsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\Integer;
-use phpDocumentor\Reflection\Types\Null_;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=ProduitsRepository::class)
+ * * @ORM\Table(name="produits", indexes={@ORM\Index(columns={"nom_produit", "description_produit", "prix_produit"},flags={"fulltext"})})
  */
 class Produits
 {
@@ -23,16 +24,30 @@ class Produits
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *     min=6,
+     *     max=50,
+     *     minMessage="Le nom de l'annonce doit contenir au moin {{ limit }} caractères",
+     *     maxMessage="Le nom de l'annonce ne doit pas depasser {{ limit }} caractères"
+     * )
      */
     private $nom_produit;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(
+     *     min=10,
+     *     max=1000,
+     *     minMessage="La description de l'annonce doit contenir au moin {{ limit }} caractères",
+     *     maxMessage="La description de l'annonce ne doit pas depasser {{ limit }} caractères"
+     * )
      */
     private $description_produit;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\File(maxSize="6000000", maxSizeMessage="Le fichier est trop lourd ({{ size }} {{ suffix }}).
+     * La taille maximale autorisée est : {{ limit }} {{ suffix }}"),
      */
     private $image_produit;
 
@@ -48,6 +63,7 @@ class Produits
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Positive
      */
     private $prix_produit;
 

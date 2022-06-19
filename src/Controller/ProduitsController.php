@@ -44,8 +44,6 @@ class ProduitsController extends AbstractController
             'produits' => $produitsRepository->findAll(),
             'dernierProduit' => $produitsRepository->getDernierProduit(),
             'pagination' => $pagination,
-
-
         ]);
     }
 
